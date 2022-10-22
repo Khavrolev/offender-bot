@@ -7,6 +7,18 @@ const url = "https://evilinsult.com/generate_insult.php";
 const bot = new TelegramApi(process.env.TOKEN, { polling: true });
 
 const start = async () => {
+  const getBotInfo = async () => {
+    try {
+      return await bot.getMe();
+    } catch (error) {
+      logger.info(error);
+    }
+  };
+
+  const botInfo = await getBotInfo();
+  const getCommandNames = (command) =>
+    botInfo ? [command, `${command}@${botInfo.username}`] : [command];
+
   bot.setMyCommands([
     { command: "/offend", description: "Пришли оскорбление" }
   ]);
@@ -17,11 +29,11 @@ const start = async () => {
     const username = message.from.username;
 
     try {
-      if (text === "/start") {
+      if (getCommandNames("/start").includes(text)) {
         return bot.sendMessage(chatId, `Здарова, @${username}, заебал!`);
       }
 
-      if (text === "/offend") {
+      if (getCommandNames("/offend").includes(text)) {
         const { data } = await axios.get(url, { params: { lang: "ru" } });
         return bot.sendMessage(chatId, data.replace(/\s\s+/g, " "));
       }
