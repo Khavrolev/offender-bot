@@ -7,7 +7,9 @@ const url = "https://evilinsult.com/generate_insult.php";
 const bot = new TelegramApi(process.env.TOKEN, { polling: true });
 
 const start = async () => {
-  bot.setMyCommands([{ command: "/offend", description: "Оскорби" }]);
+  bot.setMyCommands([
+    { command: "/offend", description: "Пришли оскорбление" }
+  ]);
 
   bot.on("message", async (message) => {
     const text = message.text;
