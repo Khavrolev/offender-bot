@@ -1,10 +1,14 @@
+const express = require("express");
 const axios = require("axios");
 const { logger } = require("./logger");
 require("dotenv").config();
 const TelegramApi = require("node-telegram-bot-api");
 
+const PORT = process.env.PORT || 3030;
 const url = "https://evilinsult.com/generate_insult.php";
 const bot = new TelegramApi(process.env.TOKEN, { polling: true });
+
+const app = express();
 
 const start = async () => {
   const getBotInfo = async () => {
@@ -49,4 +53,4 @@ const start = async () => {
   });
 };
 
-start();
+app.listen(PORT, start);
