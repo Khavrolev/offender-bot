@@ -25,11 +25,10 @@ const start = async () => {
   ]);
 
   bot.on("message", async (message) => {
-    const text = message.text;
+    const { text, reply_to_message } = message;
     const chatId = message.chat.id;
     const { username, first_name: firstName } = message.from;
     const personName = username ? `@${username}` : firstName;
-    console.log(message);
 
     try {
       if (getCommandNames("/start").includes(text)) {
@@ -41,9 +40,11 @@ const start = async () => {
         return bot.sendMessage(chatId, data.replace(/\s\s+/g, " "));
       }
 
-      return bot.sendPhoto(chatId, photo, {
-        caption: `${personName}, ты что за хуету тут понаписал, пидор!`
-      });
+      if (reply_to_message.from.username === botInfo.username) {
+        return bot.sendPhoto(chatId, photo, {
+          caption: `${personName}, ты что за хуету тут понаписал, пидор!`
+        });
+      }
     } catch (error) {
       logger.info(error);
       return bot.sendMessage(chatId, "Что-то какая-то хуета произошла, пидор");
