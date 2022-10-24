@@ -4,7 +4,7 @@ require("dotenv").config();
 
 const TelegramApi = require("node-telegram-bot-api");
 const url = "https://evilinsult.com/generate_insult.php";
-const photo = "https://ibb.co/MNyrs7p";
+const photo = "https://ibb.co/SnXTRFc";
 const bot = new TelegramApi(process.env.TOKEN, { polling: true });
 
 const start = async () => {
