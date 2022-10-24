@@ -27,11 +27,13 @@ const start = async () => {
   bot.on("message", async (message) => {
     const text = message.text;
     const chatId = message.chat.id;
-    const username = message.from.username;
+    const { username, first_name: firstName } = message.from;
+    const personName = username ? `@${username}` : firstName;
+    console.log(message);
 
     try {
       if (getCommandNames("/start").includes(text)) {
-        return bot.sendMessage(chatId, `Здарова, @${username}, заебал!`);
+        return bot.sendMessage(chatId, `Здарова, @${personName}, заебал!`);
       }
 
       if (getCommandNames("/offend").includes(text)) {
@@ -40,7 +42,7 @@ const start = async () => {
       }
 
       return bot.sendPhoto(chatId, photo, {
-        caption: `@${username}, ты что за хуету тут понаписал, пидор!`
+        caption: `${personName}, ты что за хуету тут понаписал, пидор!`
       });
     } catch (error) {
       logger.info(error);
