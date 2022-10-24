@@ -32,7 +32,7 @@ const start = async () => {
 
     try {
       if (getCommandNames("/start").includes(text)) {
-        return bot.sendMessage(chatId, `Здарова, @${personName}, заебал!`);
+        return bot.sendMessage(chatId, `Здарова, ${personName}, заебал!`);
       }
 
       if (getCommandNames("/offend").includes(text)) {
