@@ -25,6 +25,10 @@ const start = async () => {
   ]);
 
   bot.on("message", async (message) => {
+    if (!message.from || !message.chat) {
+      return;
+    }
+
     const { text, reply_to_message } = message;
     const chatId = message.chat.id;
     const { username, first_name: firstName } = message.from;
